@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -15,10 +12,8 @@ public class Server {
         try {
             serverSocket = new ServerSocket(porta);
         } catch (IOException e) {
-            //System.err.println("");
             e.printStackTrace();
         }
-
     }
 
     public Socket attendi() {
@@ -26,13 +21,11 @@ public class Server {
             clientSocket = serverSocket.accept();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-
         }
         return clientSocket;
     }
 
-    public void leggi(){
+    public void leggi() {
         try {
             InputStream inputStream = clientSocket.getInputStream();
 
@@ -43,5 +36,32 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void scrivi() {
+        try {
+            OutputStream outputStream = clientSocket.getOutputStream();
+            PrintWriter pw = new PrintWriter(outputStream);
+            pw.println("SCRITTURA DEL SERVER");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void chiudi(){
+
+        try {
+            clientSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void termina(){
+        try {
+            serverSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

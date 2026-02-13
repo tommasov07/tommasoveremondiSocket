@@ -1,4 +1,4 @@
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 public class Client {
@@ -19,5 +19,35 @@ public class Client {
             e.printStackTrace();
         }
         System.out.println("client");
+
+    }
+    public void leggi(){
+        try {
+            InputStream inputStream = socket.getInputStream();
+
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(inputStream));
+            String testo = br.readLine();
+            System.out.println("SERVER:" + testo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void scrivi() {
+        try {
+            OutputStream outputStream = socket.getOutputStream();
+            PrintWriter pw = new PrintWriter(outputStream);
+            pw.println("SCRITTURA DEL SERVER");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void chiudi(){
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
